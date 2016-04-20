@@ -17,7 +17,7 @@ public class SKU implements MessageCreateListener{
             MessageBuilder builder;
             if(args[0].equalsIgnoreCase("sku")) {
                 if (message.getAuthor() != discordAPI.getYourself()) {
-                    if (args.length > 1) {
+                    if (args.length > 3) {
                         if (args[1].equals("forums")) {
                             if (message.getMentions().size() > 0) {
                                 message.delete();

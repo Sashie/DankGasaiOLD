@@ -3,8 +3,9 @@ package Main;
 import Main.ImportantCommands.*;
 import Main.Memes.*;
 import Main.MiscCommands.*;
+import Main.Moderation.JoinServer;
 import Main.Moderation.Kicking;
-import Main.Moderation.Mute;
+import Main.Moderation.Shutdown;
 import Main.Searches.Google;
 import Main.Searches.SKU;
 import Main.Searches.Youtube;
@@ -29,12 +30,27 @@ public class Main {
     public static ArrayList<String> classes = new ArrayList();
     public static Channel adminLogChannel;
 
+    public static String dankemail, dankpassword;
+    public static String getEmail(){
+        return dankemail;
+    }
+    public static String getDankpassword(){
+        return dankpassword;
+    }
+
+
 
     public static long startupTime;
 
     public static void main(String[] args) {
+        if(args.length != 2){
+            System.out.println("Must use username and password");
+            System.exit(0);
+        }
         // Connection to Discord chat bot account \\
-        final DiscordAPI api = Javacord.getApi(Settings.getEmail(), Settings.getPassword());
+        dankemail = args[0];
+        dankpassword = args[1];
+        final DiscordAPI api = Javacord.getApi(dankemail, dankpassword);
         api.connectBlocking();
         api.registerListener(new MessageCreateListener() {
             @Override
@@ -86,7 +102,7 @@ public class Main {
                 for (Channel c : s.getChannels()){
                     if (c.getName().equalsIgnoreCase("logchannel")){
                         adminLogChannel = c;
-                        c.sendMessage("Memebot has been enabled!");
+                        c.sendMessage("Dank Gasai has been enabled!");
 
                     }
                 }
@@ -115,6 +131,7 @@ public class Main {
         commands.add("< ddos > - ddos some kid");
         commands.add("< clear chat > - Clear chat! WIP");
         commands.add("< botinfo > - Get the bots info..Stalker..");
+        commands.add(" < shutdown > - Blitz only kthnx ");
         commands.add("< lmgtfy > - Google something for someone that doesn't know how to.");
         commands.add("< roll > - Roll a random number between 1 and 100");
         commands.add("< sku |docs|forums| [user] (Thing to search > - Search the SKU forums for a answer");
@@ -220,7 +237,6 @@ public class Main {
         api.registerListener(new GetAvatar());
         api.registerListener(new Hitler());
         api.registerListener(new Rawr());
-        api.registerListener(new Mute());
         api.registerListener(new XP());
         api.registerListener(new Juststop());
         api.registerListener(new Getinfo());
@@ -251,6 +267,7 @@ public class Main {
         api.registerListener(new Mentions());
         api.registerListener(new FacePalm());
         api.registerListener(new JoinServer());
+        api.registerListener(new Shutdown());
 
 
     }
