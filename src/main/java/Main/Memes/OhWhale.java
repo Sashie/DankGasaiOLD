@@ -2,6 +2,7 @@ package Main.Memes;
 
 import Main.Settings;
 import de.btobastian.javacord.DiscordAPI;
+import de.btobastian.javacord.entities.Channel;
 import de.btobastian.javacord.entities.message.Message;
 import de.btobastian.javacord.entities.message.MessageBuilder;
 import de.btobastian.javacord.listener.message.MessageCreateListener;
@@ -13,10 +14,8 @@ public class OhWhale implements MessageCreateListener{
             args[0] = args[0].replaceFirst(Settings.getCommandStart(), "");
             if(args[0].equalsIgnoreCase("ohwhale")){
                 message.delete();
-                MessageBuilder builder = new MessageBuilder();
-                builder.append(Settings.getMsgStart() + "Oh whale, " + message.getAuthor().getMentionTag() + "!");
-                message.reply(builder.build());
-                message.replyFile(NewMemes.imageCache.get("ohwhale"));
+                Channel c = message.getChannelReceiver();
+                c.sendFile(NewMemes.imageCache.get("ohwhale"),Settings.getMsgStart() + "OhWhale, " + message.getAuthor().getMentionTag());
 
 
             }

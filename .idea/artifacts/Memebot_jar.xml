@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
   <artifact type="jar" build-on-make="true" name="Memebot:jar">
-    <output-path>$PROJECT_DIR$/target/Memebot.jar</output-path>
-    <root id="archive" name="Memebot.jar">
+    <output-path>$PROJECT_DIR$/target/DankGasaiJar</output-path>
+    <root id="archive" name="DankGasai.jar">
       <element id="module-output" name="Memebot" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.6/commons-codec-1.6.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/findbugs/annotations/2.0.1/annotations-2.0.1.jar" path-in-jar="/" />

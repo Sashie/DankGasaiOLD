@@ -17,7 +17,7 @@ public class OhBoy implements MessageCreateListener {
             args[0] = args[0].replaceFirst(Settings.getCommandStart(), "");
             if (args[0].equalsIgnoreCase("ohboy")) {
                 MessageBuilder builder = new MessageBuilder();
-                builder.append("Oh boy, " + message.getAuthor().getMentionTag()).appendNewLine().append(NewMemes.gifCache.get("ohboy"));
+                builder.append(Settings.getMsgStart() + "Oh boy, " + message.getAuthor().getMentionTag()).appendNewLine().append(NewMemes.gifCache.get("ohboy"));
                 message.reply(builder.build());
 
             }

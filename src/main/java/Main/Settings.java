@@ -10,7 +10,7 @@ public class Settings {
     private static String commandStart = "-";
     private static String msgStart = "~ ";
     private static String game = "with Gasai bot";
-    private static String version = "Alpha 0.2.0";
+    private static String version = "Alpha 0.2.1";
 
     public static String getGame()
     {

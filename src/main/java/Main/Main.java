@@ -1,5 +1,7 @@
 package Main;
 
+import Main.Edit.Game;
+import Main.Edit.Username;
 import Main.ImportantCommands.*;
 import Main.Memes.*;
 import Main.MiscCommands.*;
@@ -31,13 +33,6 @@ public class Main {
     public static Channel adminLogChannel;
 
     public static String dankemail, dankpassword;
-    public static String getEmail(){
-        return dankemail;
-    }
-    public static String getDankpassword(){
-        return dankpassword;
-    }
-
 
 
     public static long startupTime;
@@ -98,7 +93,7 @@ public class Main {
 
         for (Server s : api.getServers()){
             System.out.println("Server = " + s.getName());
-            if (s.getName().equalsIgnoreCase("Memebot LogChannel")){
+            if (s.getName().equalsIgnoreCase("DankGasai Logchannel")){
                 for (Channel c : s.getChannels()){
                     if (c.getName().equalsIgnoreCase("logchannel")){
                         adminLogChannel = c;
@@ -124,6 +119,8 @@ public class Main {
         commands.add("<ohboy> - Oh boy..");
         commands.add("<shocked> - Woah..That did not just happen!");
         commands.add("<facepalm> - Specify a user to facepalm over..");
+        commands.add("<bye> - Cya!");
+        commands.add("<???> - ???");
         commands.add("<randommeme> - Get a random meme from my memebank!");
         // Commands \\
         commands.add("~ < Misc-Commands > ~");
@@ -145,6 +142,11 @@ public class Main {
         commands.add("< flip [|heads|tails] > - Flip a coin and hope for the best!");
         commands.add("- <Moderation>  -");
         commands.add("<kick> - Kick a specific user for a one worded reason! (One word says it all)");
+        commands.add("<username> - Set the bots username WIP");
+        commands.add("<shutdown> - Shuts the bot down, wont work for now.");
+        commands.add("<joinserver> - Have GasaiD join a server with a invite! -joinserver <invite url>");
+        commands.add("<leaveserver> - Have Gasai leave the server you're in.");
+//        commands.add("<game> - Set the game Gasai is playing. WIP");
 
         // System startup feedback \\
 
@@ -227,6 +229,20 @@ public class Main {
         System.out.println("banter.java successfully registered!");
         classes.add("facepalm");
         System.out.println("facepalm.java successfully registered!");
+        classes.add("questionmark");
+        System.out.println("questionmark.java successfully registered!");
+        classes.add("username");
+        System.out.println("username.java successfully registered!");
+        classes.add("game");
+        System.out.println("game.java successfully registered!");
+        classes.add("joinserver");
+        System.out.println("joinserver.java successfully registered!");
+        classes.add("game");
+        System.out.println("game.java successfully registered!");
+        classes.add("shutdown");
+        System.out.println("shutdown.java successfully registered!");
+        classes.add("bye");
+        System.out.println("bye.java successfully registered!");
         System.out.println("getavatar.java successfully registered!");
         System.out.println("Successfully parsed all classes, " + classes.size() + " were found!");
         System.out.println("Counting up commands.");
@@ -268,7 +284,12 @@ public class Main {
         api.registerListener(new FacePalm());
         api.registerListener(new JoinServer());
         api.registerListener(new Shutdown());
-
+        api.registerListener(new Username());
+        api.registerListener(new Game());
+        api.registerListener(new questionmark());
+        api.registerListener(new Bye());
+        api.registerListener(new bothelp());
+        api.registerListener(new OhBoy());
 
     }
 

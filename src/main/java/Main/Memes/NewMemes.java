@@ -46,6 +46,8 @@ public class NewMemes implements MessageCreateListener{
         cacheImage("http://i.imgur.com/7B0LOwo.jpg", "jpg", "salty");
         cacheImage("http://i.imgur.com/ir9djYo.jpg", "jpg", "banter");
         cacheImage("http://i.imgur.com/oI2zYZq.png", "png", "facepalm");
+        cacheImage("http://i.imgur.com/Kr1FTJ6.jpg", "jpg", "questionmark");
+        cacheImage("http://i.imgur.com/uQvNaYi.jpg", "jpg", "bye");
 
         // Random memes \\
         cacheImage("http://i.imgur.com/zvbc5Fx.jpg", "jpg", "christians");

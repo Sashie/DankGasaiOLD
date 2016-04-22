@@ -19,7 +19,7 @@ public class ddos implements MessageCreateListener{
                 if (message.getMentions().get(0) != null) {
                     User u = message.getMentions().get(0);
                     message.delete();
-                    message.reply(Settings.getMsgStart() + args[1] + "! You are getting DDOSed by " + message.getAuthor().getMentionTag() + ", what a el3te haxor");
+                    message.reply(Settings.getMsgStart() + args[1] + "! You are getting DDOSed by " + message.getAuthor().getMentionTag() + ", .. Prob cause ur bad kid.");
                 }else{
                     message.reply(Settings.getMsgStart() + args[0] + " Is kewl");
                 }
