@@ -26,10 +26,10 @@ public class Youtube implements MessageCreateListener {
                         args[1] = "";
                         for (String s : args) {
                             if (s != "") {
-                                question = question + s + "+";
+                                question = question + s + "%20";
                             }
                         }
-                        String rawr = question.substring(0, question.length() - 1) + "";
+                        String rawr = question.substring(0, question.length() - 3) + "";
                         String url = "https://www.youtube.com/results?search_query=" + rawr;
                         MessageBuilder builder = new MessageBuilder();
                         builder.append(Settings.getMsgStart()).appendUser(u).append("! ").appendUser(message.getAuthor()).append(" thinks yo dumb ass might need this!").appendNewLine().append(url);
