@@ -18,8 +18,11 @@ public class Shutdown implements MessageCreateListener {
             if(args[0].equalsIgnoreCase("shutdown")){
                 if(message.getAuthor().getId().equals("98208218022428672")){
                     message.delete();
+                    Main.delayForFiveSeconds();
                     message.reply("If.....If you say so master..");
+                    Main.delayForFiveSeconds();
                     Main.adminLogChannel.sendMessage("Dank Gasai shutting down :L");
+                    Main.delayForFiveSeconds();
                     System.exit(0);
                 }
             }

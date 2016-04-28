@@ -11,6 +11,9 @@
     </content>
     <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: space.gatt.javacordcommander:javacordcommander:1.0.3" level="project" />
+    <orderEntry type="library" name="Maven: commons.codec:commons-codec:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: gson:gson:2.6.2" level="project" />
     <orderEntry type="library" name="Maven: org.reflections:reflections:0.9.10" level="project" />
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.19.0-GA" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.findbugs:annotations:2.0.1" level="project" />

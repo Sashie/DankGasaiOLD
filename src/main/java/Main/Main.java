@@ -19,6 +19,7 @@ import de.btobastian.javacord.entities.Server;
 import de.btobastian.javacord.entities.User;
 import de.btobastian.javacord.entities.message.Message;
 import de.btobastian.javacord.listener.message.MessageCreateListener;
+//import space.gatt.JavacordCommander.JavacordCommander;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -34,29 +35,45 @@ public class Main {
 
     public static String dankemail, dankpassword;
 
+    private static boolean running = false;
 
     public static long startupTime;
 
     public static void main(String[] args) {
-        if(args.length != 2){
-            System.out.println("Must use username and password");
+
+        if(args.length != 1){
+            System.out.println("Must enter a token");
             System.exit(0);
         }
-        // Connection to Discord chat bot account \\
         dankemail = args[0];
-        dankpassword = args[1];
-        final DiscordAPI api = Javacord.getApi(dankemail, dankpassword);
+        // Connection to Discord chat bot account \\
+
+        delayForFiveSeconds();
+        final DiscordAPI api = Javacord.getApi(dankemail, true);
+        delayForFiveSeconds();
+//        JavacordCommander jcc = new JavacordCommander(api);
+        delayForFiveSeconds();
+//        jcc.enableSnooper("Main");
+        delayForFiveSeconds();
         api.connectBlocking();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         api.registerListener(new MessageCreateListener() {
             @Override
             public void onMessageCreate(DiscordAPI discordAPI, Message message) {
-                if(message.getContent().startsWith(Settings.getCommandStart() + "snatch")){
+                if(message.getContent().startsWith(Settings.getCommandStart())){
+                    adminLogChannel.sendMessage(message.getAuthor().getName() + "(" + message.getChannelReceiver().getServer().getName() + ")" + "[" + message.getChannelReceiver().getName() + "]" + ">" + message.getContent());
+                }
+                if (message.getContent().startsWith(Settings.getCommandStart() + "snatch")) {
                     message.delete();
-                    if(message.getMentions().size() == 1){
+                    if (message.getMentions().size() == 1) {
                         copyAvatar(message.getMentions().get(0));
                         message.reply(message.getMentions().get(0).getMentionTag() + "'s profile picture is now my profile picture.");
                     }
-                }else if(message.isPrivateMessage() && (message.getAuthor() != discordAPI.getYourself())){
+                } else if (message.isPrivateMessage() && (message.getAuthor() != discordAPI.getYourself())) {
                     List<String> replies = new ArrayList<>();
                     replies.add("You are dumb kid");
                     replies.add("I know you are but what am I!");
@@ -68,18 +85,19 @@ public class Main {
                     replies.add("R000000D");
                     replies.add("I don't understand");
 
-                    String reply = "";
                     Random random = new Random();
-                    reply = replies.get(random.nextInt(replies.size()));
+                    String reply = replies.get(random.nextInt(replies.size()));
                     message.reply(reply);
                 }
             }
-            public void copyAvatar(User user){
-                try{
+
+            public void copyAvatar(User user) {
+                try {
                     BufferedImage avatar = user.getAvatar().get();
                     Exception ex = api.updateAvatar(avatar).get();
-                    if(ex != null){
-                        ex.printStackTrace();;
+                    if (ex != null) {
+                        ex.printStackTrace();
+                        ;
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -91,11 +109,11 @@ public class Main {
         });
 
 
-        for (Server s : api.getServers()){
+        for (Server s : api.getServers()) {
             System.out.println("Server = " + s.getName());
-            if (s.getName().equalsIgnoreCase("DankGasai Logchannel")){
-                for (Channel c : s.getChannels()){
-                    if (c.getName().equalsIgnoreCase("logchannel")){
+            if (s.getName().equalsIgnoreCase("DankGasai Logchannel")) {
+                for (Channel c : s.getChannels()) {
+                    if (c.getName().equalsIgnoreCase("logchannel")) {
                         adminLogChannel = c;
                         c.sendMessage("Dank Gasai has been enabled!");
 
@@ -105,6 +123,8 @@ public class Main {
             }
         }
 
+//        space.gatt.JavacordCommander.Settings.setMsgStarter(Settings.getMsgStart());
+//        space.gatt.JavacordCommander.Settings.setCommandStarter(Settings.getCommandStart());
         Date date = new Date();
         startupTime = date.getTime();
         // Memes \\
@@ -137,7 +157,6 @@ public class Main {
         commands.add("< 1v1 > - Go against another user! ");
         commands.add("< uptime > - See how long I've been awake.");
         commands.add("< penis > - Find the penis size of a user");
-        commands.add("< decide > - Have memebot pick between two words!");
         commands.add("< version > - Find my current version :)");
         commands.add("< flip [|heads|tails] > - Flip a coin and hope for the best!");
         commands.add("- <Moderation>  -");
@@ -146,108 +165,8 @@ public class Main {
         commands.add("<shutdown> - Shuts the bot down, wont work for now.");
         commands.add("<joinserver> - Have GasaiD join a server with a invite! -joinserver <invite url>");
         commands.add("<leaveserver> - Have Gasai leave the server you're in.");
-//        commands.add("<game> - Set the game Gasai is playing. WIP");
 
-        // System startup feedback \\
-
-        System.out.println("Loading settings for Memebot version " + Settings.getVersion());
-        System.out.println("Successfully logged in!");
-        System.out.println("Setting game to: " +  Settings.getGame());
-        api.setGame(Settings.getGame());
-        api.updateUsername("Dank Gasai");
-        System.out.println("-= Parsing all current classes to Main class =-");
-        // Counting up classes \\
-        classes.add("Main");
-        System.out.println("Main class loaded!");
-        classes.add("Hitler");
-        System.out.println("Hitler.java successfully registered!");
-        classes.add("lowhale");
-        System.out.println("lowhale.java successfully registered!");
-        classes.add("ohwhale");
-        System.out.println("OhWhale.java successfully registered!");
-        classes.add("triggered");
-        System.out.println("Triggered.java successfully registered!");
-        classes.add("PMR");
-        System.out.println("PMR.java successfully registered!");
-        classes.add("mentions");
-        System.out.println("mentions.java successfully registered!");
-        classes.add("kicking");
-        System.out.println("kicking.java successfully registered!");
-        classes.add("settings");
-        System.out.println("Settings.java successfully registered!");
-        classes.add("botinfo");
-        System.out.println("Botinfo.java successfully registered!");
-        classes.add("help");
-        System.out.println("Help.java successfully registered!");
-        classes.add("uptime");
-        System.out.println("Uptime.java successfully registered!");
-        classes.add("Clearchat");
-        System.out.println("Clearchat.java successfully registered!");
-        classes.add("Roll");
-        System.out.println("roll.java successfully registered");
-        classes.add("ddos");
-        System.out.println("ddos.java successfully registered!");
-        classes.add("version");
-        System.out.println("version.java successfully registered!");
-        classes.add("sku");
-        System.out.println("SKU.java successfully registered");
-        classes.add("google");
-        System.out.println("Google.java successfully registered!");
-        classes.add("onevone");
-        System.out.println("onevone.java successfully registered!");
-        classes.add("RandomMemes");
-        System.out.println("RandomMemes.java successfully registered");
-        classes.add("penissize");
-        System.out.println("penissize.java has successfully registered!");
-        classes.add("decide");
-        System.out.println("decide.java successfully registered!");
-        classes.add("version");
-        System.out.println("version.java successfully registered!");
-        classes.add("flip");
-        System.out.println("flip.java successfully registered!");
-        classes.add("salty");
-        System.out.println("Salty.java successfully registered!");
-        classes.add("NewMemes");
-        System.out.println("NewMemes.java successfully registered!");
-        classes.add("Getinfo");
-        System.out.println("Getinfo.java successfully registered!");
-        classes.add("Juststop");
-        System.out.println("Juststop.java has been successfully registered!");
-        classes.add("xp");
-        System.out.println("xp.java successfully registered!");
-        classes.add("Mute");
-        System.out.println("mute.java successfully registered!");
-        classes.add("Rawr");
-        System.out.println("rawr.java successfully registered!");
-        classes.add("getavatar");
-        System.out.println("getavatar.java successfully registered!");
-        commands.add("youtube");
-        System.out.println("youtube.java successfully registered!");
-        classes.add("shocked");
-        System.out.println("shocked.java successfully registered!");
-        classes.add("banter");
-        System.out.println("banter.java successfully registered!");
-        classes.add("facepalm");
-        System.out.println("facepalm.java successfully registered!");
-        classes.add("questionmark");
-        System.out.println("questionmark.java successfully registered!");
-        classes.add("username");
-        System.out.println("username.java successfully registered!");
-        classes.add("game");
-        System.out.println("game.java successfully registered!");
-        classes.add("joinserver");
-        System.out.println("joinserver.java successfully registered!");
-        classes.add("game");
-        System.out.println("game.java successfully registered!");
-        classes.add("shutdown");
-        System.out.println("shutdown.java successfully registered!");
-        classes.add("bye");
-        System.out.println("bye.java successfully registered!");
-        System.out.println("getavatar.java successfully registered!");
-        System.out.println("Successfully parsed all classes, " + classes.size() + " were found!");
-        System.out.println("Counting up commands.");
-        System.out.println("There were " + commands.size() + " commands found!");
-        System.out.println("Memebot has successfully be started! Type -help in a server with me to begin!");
+        // Registers so bot starts up right away \\
         api.registerListener(new Banter());
         api.registerListener(new Shocked());
         api.registerListener(new GetAvatar());
@@ -256,14 +175,9 @@ public class Main {
         api.registerListener(new XP());
         api.registerListener(new Juststop());
         api.registerListener(new Getinfo());
-        api.registerListener(new NewMemes());
-        NewMemes newmemes = new NewMemes();
-        newmemes.cacheImages();
-        api.registerListener(newmemes);
         api.registerListener(new Salty());
         api.registerListener(new Flip());
         api.registerListener(new penissize());
-        api.registerListener(new Decide());
         api.registerListener(new RandomMemes());
         api.registerListener(new onevone());
         api.registerListener(new Google());
@@ -277,8 +191,6 @@ public class Main {
         api.registerListener(new Youtube());
         api.registerListener(new OhWhale());
         api.registerListener(new Triggered());
-        api.registerListener(new Help());
-        api.registerListener(new Botinfo());
         api.registerListener(new Kicking());
         api.registerListener(new Mentions());
         api.registerListener(new FacePalm());
@@ -289,9 +201,167 @@ public class Main {
         api.registerListener(new questionmark());
         api.registerListener(new Bye());
         api.registerListener(new bothelp());
+        api.registerListener(new Botinfo());
         api.registerListener(new OhBoy());
+        api.registerListener(new Help());
+        api.registerListener(new NewMemes());
+        NewMemes newmemes = new NewMemes();
+        newmemes.cacheImages();
+        api.registerListener(newmemes);
+
+        // System startup feedback \\
+        System.out.println("Successfully logged in!");
+        System.out.println("Setting game to: " + Settings.getGame());
+        api.setGame(Settings.getGame());
+        api.updateUsername("Dank Gasai");
+        System.out.println("-= Parsing all current classes to Main class =-");
+        // Counting up classes \\
+        classes.add("Main");
+        System.out.println("Main class loaded!");
+        delayForFiveSeconds();
+        classes.add("Hitler");
+        System.out.println("Hitler.java successfully registered!");
+        classes.add("lowhale");
+        delayForFiveSeconds();
+        System.out.println("lowhale.java successfully registered!");
+        classes.add("ohwhale");
+        delayForFiveSeconds();
+        System.out.println("OhWhale.java successfully registered!");
+        classes.add("triggered");
+        delayForFiveSeconds();
+        System.out.println("Triggered.java successfully registered!");
+        classes.add("PMR");
+        delayForFiveSeconds();
+        System.out.println("PMR.java successfully registered!");
+        classes.add("mentions");
+        delayForFiveSeconds();
+        System.out.println("mentions.java successfully registered!");
+        classes.add("kicking");
+        delayForFiveSeconds();
+        System.out.println("kicking.java successfully registered!");
+        classes.add("settings");
+        delayForFiveSeconds();
+        System.out.println("Settings.java successfully registered!");
+        classes.add("botinfo");
+        delayForFiveSeconds();
+        System.out.println("Botinfo.java successfully registered!");
+        classes.add("help");
+        delayForFiveSeconds();
+        System.out.println("Help.java successfully registered!");
+        classes.add("uptime");
+        delayForFiveSeconds();
+        System.out.println("Uptime.java successfully registered!");
+        classes.add("Clearchat");
+        delayForFiveSeconds();
+        System.out.println("Clearchat.java successfully registered!");
+        classes.add("Roll");
+        delayForFiveSeconds();
+        System.out.println("roll.java successfully registered");
+        classes.add("ddos");
+        delayForFiveSeconds();
+        System.out.println("ddos.java successfully registered!");
+        classes.add("version");
+        delayForFiveSeconds();
+        System.out.println("version.java successfully registered!");
+        classes.add("sku");
+        delayForFiveSeconds();
+        System.out.println("SKU.java successfully registered");
+        classes.add("google");
+        delayForFiveSeconds();
+        System.out.println("Google.java successfully registered!");
+        classes.add("onevone");
+        delayForFiveSeconds();
+        System.out.println("onevone.java successfully registered!");
+        classes.add("RandomMemes");
+        delayForFiveSeconds();
+        System.out.println("RandomMemes.java successfully registered");
+        classes.add("penissize");
+        delayForFiveSeconds();
+        System.out.println("penissize.java has successfully registered!");
+        classes.add("version");
+        delayForFiveSeconds();
+        System.out.println("version.java successfully registered!");
+        classes.add("flip");
+        delayForFiveSeconds();
+        System.out.println("flip.java successfully registered!");
+        classes.add("salty");
+        delayForFiveSeconds();
+        System.out.println("Salty.java successfully registered!");
+        classes.add("NewMemes");
+        delayForFiveSeconds();
+        System.out.println("NewMemes.java successfully registered!");
+        classes.add("Getinfo");
+        delayForFiveSeconds();
+        System.out.println("Getinfo.java successfully registered!");
+        classes.add("Juststop");
+        delayForFiveSeconds();
+        System.out.println("Juststop.java has been successfully registered!");
+        classes.add("xp");
+        delayForFiveSeconds();
+        System.out.println("xp.java successfully registered!");
+        classes.add("Mute");
+        delayForFiveSeconds();
+        System.out.println("mute.java successfully registered!");
+        classes.add("Rawr");
+        delayForFiveSeconds();
+        System.out.println("rawr.java successfully registered!");
+        classes.add("getavatar");
+        delayForFiveSeconds();
+        System.out.println("getavatar.java successfully registered!");
+        commands.add("youtube");
+        delayForFiveSeconds();
+        System.out.println("youtube.java successfully registered!");
+        classes.add("shocked");
+        delayForFiveSeconds();
+        System.out.println("shocked.java successfully registered!");
+        classes.add("banter");
+        delayForFiveSeconds();
+        System.out.println("banter.java successfully registered!");
+        classes.add("facepalm");
+        delayForFiveSeconds();
+        System.out.println("facepalm.java successfully registered!");
+        classes.add("questionmark");
+        System.out.println("questionmark.java successfully registered!");
+        classes.add("username");
+        delayForFiveSeconds();
+        System.out.println("username.java successfully registered!");
+        classes.add("game");
+        delayForFiveSeconds();
+        System.out.println("game.java successfully registered!");
+        classes.add("joinserver");
+        delayForFiveSeconds();
+        System.out.println("joinserver.java successfully registered!");
+        classes.add("game");
+        delayForFiveSeconds();
+        System.out.println("game.java successfully registered!");
+        classes.add("shutdown");
+        delayForFiveSeconds();
+        System.out.println("shutdown.java successfully registered!");
+        classes.add("bye");
+        delayForFiveSeconds();
+        System.out.println("bye.java successfully registered!");
+        delayForFiveSeconds();
+        System.out.println("Counting up classes.");
+        delayForFiveSeconds();
+        System.out.println("There were " + classes.size() + " classes found!");
+        delayForFiveSeconds();
+        System.out.println("Counting up commands.");
+        delayForFiveSeconds();
+        System.out.println("There were " + commands.size() + " commands found!");
+        delayForFiveSeconds();
+        System.out.println("Memebot has successfully be started! Type -help in a server with me to begin!");
+
+
+    }
+    public static void delayForFiveSeconds(){
+
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
-}
 
+}

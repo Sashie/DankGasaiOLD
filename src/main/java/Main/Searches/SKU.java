@@ -93,6 +93,20 @@ public class SKU implements MessageCreateListener{
                         message.getAuthor().sendMessage(builder2.build());
                     }
                 }
+            }else if(args[0].equalsIgnoreCase("docs")){
+                message.delete();
+                String question = "";
+                args[0] = "";
+                for(String s : args){
+                    if(s != ""){
+                        question = question +s + "+";
+                    }
+                }
+                String rawr = question.substring(0, question.length() - 1) + "";
+                String url = "https://skunity.com/search?search=" + rawr;
+                MessageBuilder builder1 = new MessageBuilder();
+                builder1.append(Settings.getMsgStart() + message.getAuthor().getMentionTag() + " here ya go you lazy son bitch, " + url);
+                message.reply(builder1.build());
             }
         }
     }

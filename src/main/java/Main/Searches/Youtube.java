@@ -29,6 +29,7 @@ public class Youtube implements MessageCreateListener {
                                 question = question + s + "%20";
                             }
                         }
+
                         String rawr = question.substring(0, question.length() - 3) + "";
                         String url = "https://www.youtube.com/results?search_query=" + rawr;
                         MessageBuilder builder = new MessageBuilder();
@@ -43,6 +44,37 @@ public class Youtube implements MessageCreateListener {
                         builder0.append("< EXAMPLE: -youtube @iblitzkriegi RAWR RAWR >").appendNewLine();
                         builder0.append("```").appendNewLine();
                         builder0.append("__***NOTE***__ ** Please note that this is a example, so replace the @iblitzkriegi with a user on your server!**");
+                    }
+                }else if(args[0].equalsIgnoreCase("yt")){
+                    if(message.getContent().contains("&")){
+                        message.delete();
+                        String question = "";
+                        args[0] = "";
+                        for (String s : args) {
+                            if (s != "") {
+                                question = question + s + "%20";
+                            }
+                        }
+                        String rawr = question.substring(0, question.length() - 3) + "";
+                        String url = "https://www.youtube.com/results?search_query=" + rawr;
+                        String end = url.replaceAll("&", "and");
+                        MessageBuilder builder = new MessageBuilder();
+                        builder.append(Settings.getMsgStart() + message.getAuthor().getMentionTag() + " here ya go, ya lazy ass.. " + end);
+                        message.reply(builder.build());
+                    }else {
+                        message.delete();
+                        String question = "";
+                        args[0] = "";
+                        for (String s : args) {
+                            if (s != "") {
+                                question = question + s + "%20";
+                            }
+                        }
+                        String rawr = question.substring(0, question.length() - 3) + "";
+                        String url = "https://www.youtube.com/results?search_query=" + rawr;
+                        MessageBuilder builder = new MessageBuilder();
+                        builder.append(Settings.getMsgStart() + message.getAuthor().getMentionTag() + " here ya go, ya lazy ass.. " + url);
+                        message.reply(builder.build());
                     }
                 }
             }

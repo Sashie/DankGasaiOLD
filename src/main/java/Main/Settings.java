@@ -9,8 +9,8 @@ public class Settings {
 
     private static String commandStart = "-";
     private static String msgStart = "~ ";
-    private static String game = "with Gasai bot";
-    private static String version = "Alpha 0.2.1";
+    private static String game = "with myself.";
+    private static String version = "Alpha 0.2.3";
 
     public static String getGame()
     {
